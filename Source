@@ -1,0 +1,591 @@
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local Window = Rayfield:CreateWindow({
+    Name = "GHOSTMASTER.XYZ",
+    LoadingTitle = "GHOSTMASTER.XYZ LOADER",
+    LoadingSubtitle = "by REMASTER & GHOSSTLE",
+    ConfigurationSaving = {
+       Enabled = false,
+       FolderName = nil, -- Create a custom folder for your hub/game
+       FileName = "Big Hub"
+    },
+    Discord = {
+       Enabled = false,
+       Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+       RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+    },
+    KeySystem = true, -- Set this to true to use our key system
+    KeySettings = {
+       Title = "Key System Of GHOSTMASTER.XYZ",
+       Subtitle = "By REMASTER & GHOSSTLE",
+       Note = "(only developers have the key)",
+       FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+       SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+       Key = {"GRXYZ"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+    }
+ })
+
+-- Notific
+function NotifyFloat()
+Rayfield:Notify({
+        Title = "Float Toggle",
+        Content = "(Just try to activate 1 type of float since the dropdown removal is not yet)",
+        Duration = 6.5,
+        Image = 4483362458,
+        Actions = { -- Notification Buttons
+           Ignore = {
+              Name = "Close!",
+              Callback = function()
+            end
+        },
+     },
+})
+end
+
+Rayfield:Notify({
+    Title = "GHOSTMASTER.XYZ 1.1v",
+    Content = "Is loading!! Wait...",
+    Duration = 6.5,
+    Image = 4483362458,
+    Actions = { -- Notification Buttons
+       Ignore = {
+          Name = "Close!",
+          Callback = function()
+          print("Loaded!!")
+       end
+    },
+ },
+ })
+
+-- FUNCIONES
+
+local FloatNotify = false
+
+function randomString()
+    local length = math.random(10, 20)
+    local array = {}
+    for i = 1, length do
+        array[i] = string.char(math.random(32, 126))
+    end
+    return table.concat(array)
+end
+
+-- FOV Changer
+local customFOV = 0
+
+game.Workspace.CurrentCamera.FieldOfView = customFOV
+
+game.Workspace.CurrentCamera:GetPropertyChangedSignal("FieldOfView"):Connect(function()
+    if game.Workspace.CurrentCamera.FieldOfView ~= customFOV then
+        game.Workspace.CurrentCamera.FieldOfView = customFOV
+    end
+end)
+
+function setCustomFOV(FOV)
+    customFOV = FOV
+    game.Workspace.CurrentCamera.FieldOfView = customFOV
+end
+-- END FOV Changer --
+
+-- ClockTime's
+local customClockTime = 12.5
+
+game:GetService("Lighting").ClockTime = customClockTime
+
+game:GetService("Lighting"):GetPropertyChangedSignal("ClockTime"):Connect(function()
+    if game:GetService("Lighting").ClockTime ~= customClockTime then
+        game:GetService("Lighting").ClockTime = customClockTime
+    end
+end)
+
+function setCustomClockTime(clockTime)
+    customClockTime = clockTime
+    game:GetService("Lighting").ClockTime = customClockTime
+end
+
+-- END ClockTime's
+
+
+
+ -- SECCIONES
+
+ local Tab = Window:CreateTab("Combat", 4483362458)
+ local Tab2 = Window:CreateTab("Visuals", 4483362458)
+ local Tab3 = Window:CreateTab("Misc", 4483362458)
+ local Tab4 = Window:CreateTab("Config", 4483362458)
+ local tab5 = Window:CreateTab("Player", 4483365458)
+
+ -- TOGGLE's --
+
+ local Toggle1 = Tab3:CreateToggle({
+    Name = "Float Toggle",
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(IsActive1) 
+     if IsActive1 then 
+         Dropdown1 = true
+     else
+         Dropdown1 = false
+        end
+    end
+ })
+
+ local Toggle2 = Tab2:CreateToggle({
+   Name = "FOV Toggle",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(IsActive) 
+    if IsActive then
+        Slider1 = true
+    else
+        Slider1 = false
+        end
+    end
+})
+
+local Toggle3 = Tab2:CreateToggle({
+    Name = "ClockTime Toggle",
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(IsActive2) 
+     if IsActive2 then
+         Slider2 = true
+     else
+         Slider2 = false
+        end
+    end
+ })
+
+ local Toggle4 = tab5:CreateToggle({
+    Name = "Player Speed",
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(IsActive3)
+    if IsActive3 then 
+       Slider3 = true
+    end
+    if not IsActive3  then
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    character.Humanoid.WalkSpeed = 16 
+    end end
+ })
+
+-- SLIDER's --
+local Slider1 = Tab2:CreateSlider({
+     Name = "FOV",
+     Range = {70, 110},
+     Increment = 5,
+     Suffix = "FieldOfView",
+     CurrentValue = customFOV, -- set the initial value of the slider to the custom FOV value
+     Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+     Callback = function(FOV)
+        if Slider1 == true then
+         setCustomFOV(FOV)
+        end
+    end
+ })
+ 
+local Slider2 = Tab2:CreateSlider({
+    Name = "Clock Time",
+    Range = {0, 24},
+    Increment = 0.5,
+    Suffix = "ClockTime",
+    CurrentValue = customClockTime, -- set the initial value of the slider to the custom clock time value
+    Flag = "Slider2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(clockTime)
+        if Slider2 == true then
+        setCustomClockTime(clockTime)
+        end 
+    end
+})
+
+local Slider3 = tab5:CreateSlider({
+    Name = "Player Speed",
+    Range = {0, 100},
+    Increment = 1,
+    Suffix = "PlayerSpeed",
+    CurrentValue = 16,
+    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(PlayerSpeed)
+   if Slider3 == true then
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+character.Humanoid.WalkSpeed = (PlayerSpeed)
+   end
+    end,
+ })
+
+-- DROPDOWN's --
+
+local Dropdown1 = Tab3:CreateDropdown({
+    Name = "Float Type",
+    Options = {"None","Float Plataform", "Float Anchored"},
+    CurrentOption = {"None"},
+    MultipleOptions = false,
+    Flag = "Dropdown1",
+    Callback = function(Floating)
+        if Dropdown1 == true then
+    if Floating[1] == "Float Plataform" then
+        local RunService = game:GetService("RunService")
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+        local IYMouse = LocalPlayer:GetMouse()
+        
+        local function getRoot(character)
+            local human = character:FindFirstChildOfClass("Humanoid")
+            if human then
+                return human.RootPart
+            end
+        end 
+        local floatName = randomString()
+        
+        local function createFloatingPart()
+            local pchar = LocalPlayer.Character
+            if pchar and not pchar:FindFirstChild(floatName) then
+                local Float = Instance.new("Part")
+                Float.Name = floatName
+                Float.Parent = pchar
+                Float.Transparency = 1
+                Float.Size = Vector3.new(2,0.2,1.5)
+                Float.Anchored = true
+                local FloatValue = -3.1
+                Float.CFrame = getRoot(pchar).CFrame * CFrame.new(0, FloatValue, 0)
+                
+                local qUp = IYMouse.KeyUp:Connect(function(KEY)
+                    if KEY == "q" then
+                        FloatValue = FloatValue + 0.5
+                    end
+                end)
+                
+                local eUp = IYMouse.KeyUp:Connect(function(KEY)
+                    if KEY == "e" then
+                        FloatValue = FloatValue - 0.5
+                    end
+                end)
+                
+                local qDown = IYMouse.KeyDown:Connect(function(KEY)
+                    if KEY == "q" then
+                        FloatValue = FloatValue - 0.5
+                    end
+                end)
+                
+                local eDown = IYMouse.KeyDown:Connect(function(KEY)
+                    if KEY == "e" then
+                        FloatValue = FloatValue + 0.5
+                    end
+                end)
+                
+                local function floatPadLoop()
+                    if pchar:FindFirstChild(floatName) and getRoot(pchar) then
+                        Float.CFrame = getRoot(pchar).CFrame * CFrame.new(0, FloatValue, 0)
+                    else
+                        qUp:Disconnect()
+                        eUp:Disconnect()
+                        qDown:Disconnect()
+                        eDown:Disconnect()
+                        floatDied:Disconnect()
+                        Float:Destroy()
+                    end
+                end
+                
+                local floatDied = pchar:FindFirstChildOfClass("Humanoid").Died:Connect(function()
+                    qUp:Disconnect()
+                    eUp:Disconnect()
+                    qDown:Disconnect()
+                    eDown:Disconnect()
+                    FloatingFunc:Disconnect()
+                    Float:Destroy()
+                end)
+                
+                local FloatingFunc = RunService.Heartbeat:Connect(floatPadLoop)
+            end
+        end 
+    
+        createFloatingPart()
+        elseif Floating[1] == "Float Anchored" then
+            local length = math.random(10,20)
+local array = {}
+for i = 1, length do
+    array[i] = string.char(math.random(32, 126))
+end
+local randomString = table.concat(array)
+
+local player = game.Players.LocalPlayer
+local isFloating = false
+local floatName = ""
+
+function float()
+    if not isFloating then
+        player.Character.HumanoidRootPart.Anchored = true
+        player.Character.HumanoidRootPart.CFrame = CFrame.new(player.Character.HumanoidRootPart.Position - Vector3.new(0, 15, 0))
+        isFloating = true
+    end
+end
+
+function unfloat()
+    if isFloating then
+        player.Character.HumanoidRootPart.Anchored = false
+        player.Character.HumanoidRootPart.CFrame = CFrame.new(player.Character.HumanoidRootPart.Position - Vector3.new(0, -18, 0))
+        isFloating = false
+    end
+end
+
+local inputConnection = game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+    if input.KeyCode == Enum.KeyCode.X then
+        if input.UserInputState == Enum.UserInputState.Begin then
+            if isFloating then
+                unfloat()
+            else
+                float()
+end end
+        end end)
+  
+    end end 
+end
+})
+
+local Socolo = Instance.new("Sky",game:GetService("Lighting"))
+game:GetService("Lighting")
+
+local Dropdown2 = Tab2:CreateDropdown({
+    Name = "SkyChanger",
+    Options = {'Default', 'Sponge Bob', 'Among Us', 'Redshift', 'Aesthetic Night', 'Neptune'},
+    CurrentOption = {"Default"},
+    MultipleOptions = false,
+    Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(HOMO)
+
+            if HOMO[1] == "Default" then
+              Socolo.SkyboxBk = "rbxasset://textures/sky/sky512_bk.tex"
+              Socolo.SkyboxDn = "rbxasset://textures/sky/sky512_dn.tex"
+              Socolo.SkyboxFt = "rbxasset://textures/sky/sky512_ft.tex"
+              Socolo.SkyboxLf = "rbxasset://textures/sky/sky512_lf.tex"
+              Socolo.SkyboxRt = "rbxasset://textures/sky/sky512_rt.tex"
+              Socolo.SkyboxUp = "rbxasset://textures/sky/sky512_up.tex"
+            elseif HOMO[1] == "Sponge Bob" then
+              Socolo.SkyboxBk = "http://www.roblox.com/asset/?id=7633178166"
+              Socolo.SkyboxDn = "http://www.roblox.com/asset/?id=7633178166"
+              Socolo.SkyboxFt = "http://www.roblox.com/asset/?id=7633178166"
+              Socolo.SkyboxLf = "http://www.roblox.com/asset/?id=7633178166"
+              Socolo.SkyboxRt = "http://www.roblox.com/asset/?id=7633178166"
+              Socolo.SkyboxUp = "http://www.roblox.com/asset/?id=7633178166"
+            elseif HOMO[1] == "Among Us" then
+              Socolo.SkyboxBk = "rbxassetid://5752463190"
+              Socolo.SkyboxDn = "rbxassetid://5872485020"
+              Socolo.SkyboxFt = "rbxassetid://5752463190"
+              Socolo.SkyboxLf = "rbxassetid://5752463190"
+              Socolo.SkyboxRt = "rbxassetid://5752463190"
+              Socolo.SkyboxUp = "rbxassetid://5752463190"
+            elseif HOMO[1] == "Redshift" then
+              Socolo.SkyboxBk = "rbxassetid://401664839"
+              Socolo.SkyboxDn = "rbxassetid://401664862"
+              Socolo.SkyboxFt = "rbxassetid://401664960"
+              Socolo.SkyboxLf = "rbxassetid://401664881"
+              Socolo.SkyboxRt = "rbxassetid://401664901"
+              Socolo.SkyboxUp = "rbxassetid://401664936"
+            elseif HOMO[1] == "Aesthetic Night" then
+              Socolo.SkyboxBk = "rbxassetid://1045964490"
+              Socolo.SkyboxDn = "rbxassetid://1045964368"
+              Socolo.SkyboxFt = "rbxassetid://1045964655"
+              Socolo.SkyboxLf = "rbxassetid://1045964655"
+              Socolo.SkyboxRt = "rbxassetid://1045964655"
+              Socolo.SkyboxUp = "rbxassetid://1045962969"
+            elseif HOMO[1] == "Neptune" then
+              Socolo.SkyboxBk = "rbxassetid://218955819"
+              Socolo.SkyboxDn = "rbxassetid://218953419"
+              Socolo.SkyboxFt = "rbxassetid://218954524"
+              Socolo.SkyboxLf = "rbxassetid://218958493"
+              Socolo.SkyboxRt = "rbxassetid://218957134"
+              Socolo.SkyboxUp = "rbxassetid://218950090"
+            end
+        end
+ })
+
+--BUTTONS
+
+local Button = Tab:CreateButton({
+    Name = "break through the ground",
+    Callback = function()
+local MOVE_DISTANCE = 5
+
+local function movePlayerDown()
+    local character = game.Players.LocalPlayer.Character
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    local rootPart = character:FindFirstChild("HumanoidRootPart")
+    if humanoid and rootPart then
+        rootPart.CFrame = rootPart.CFrame - Vector3.new(0, MOVE_DISTANCE, 0)
+    end
+end
+
+local function movePlayerUp()
+    local character = game.Players.LocalPlayer.Character
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    local rootPart = character:FindFirstChild("HumanoidRootPart")
+    if humanoid and rootPart then
+        rootPart.CFrame = rootPart.CFrame + Vector3.new(0, MOVE_DISTANCE, 0)
+    end
+end
+
+game:GetService("UserInputService").InputBegan:Connect(function(input, isProcessed)
+    if not isProcessed then
+        if input.KeyCode == Enum.KeyCode.X then
+            movePlayerDown()
+        elseif input.KeyCode == Enum.KeyCode.Z then
+            movePlayerUp()
+        end
+    end
+end)
+    end
+})
+
+local Button2 = tab5:CreateButton({
+    Name = "NoClip (u cant disable it)",
+    Callback = function()
+        local Workspace = game:GetService("Workspace")
+        local Players = game:GetService("Players")
+        local Plr = Players.LocalPlayer
+        local Clipon = true
+        
+        Stepped = game:GetService("RunService").Stepped:Connect(function()
+            if not Clipon == false then
+             for a, b in pairs(Workspace:GetChildren()) do
+                         if b.Name == Plr.Name then
+                         for i, v in pairs(Workspace[Plr.Name]:GetChildren()) do
+                         if v:IsA("BasePart") then
+                         v.CanCollide = false
+                         end end end end
+            else
+             Stepped:Disconnect()
+            end
+           end)
+    end,
+ })
+
+ --COLOR PICKER
+ local ColorPicker = Tab2:CreateColorPicker({
+    Name = "Color Primary",
+    Color = Color3.fromRGB(255,255,255),
+    Flag = "ColorPicker1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Color)
+     --PISTOLA
+     game:GetService("ReplicatedStorage").GunData.M1911.ViewModel.Weapon.Details.Color = Color
+     game:GetService("ReplicatedStorage").GunData.M1911.ViewModel.Weapon.Handle1.Color = Color
+     game:GetService("ReplicatedStorage").GunData.M1911.ViewModel.Weapon.Slide.Color = Color
+
+     --REVOLVER
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Barrel.Color = Color
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Hammer.Color = Color
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Handle.Color = Color
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Trigger.Color = Color
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.TriggerGuard.Color = Color
+     --GLOCK
+     game:GetService("ReplicatedStorage").GunData.Glock.ViewModel.Weapon.Static["Meshes/G21Gen4Small_Barrel"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.Glock.ViewModel.Weapon.Static["Meshes/G21Gen4Small_Details"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.Glock.ViewModel.Weapon.Static["Meshes/G21Gen4Small_Extradetail"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.Glock.ViewModel.Weapon.Static["Meshes/G21Gen4Small_Handle"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.Glock.ViewModel.Weapon.Static["Meshes/G21Gen4Small_Triggerguard"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.Glock.ViewModel.Weapon.Static["Meshes/G21Gen4Small_Triggerguard.001"].Color = Color
+     --SKORPION
+     --MOSSBERG
+     game:GetService("ReplicatedStorage").GunData.Mossberg.ViewModel.Weapon.Model.Trigger.Color = Color
+     game:GetService("ReplicatedStorage").GunData.Mossberg.ViewModel.Weapon.Model.Stock.Color = Color
+     game:GetService("ReplicatedStorage").GunData.Mossberg.ViewModel.Weapon.Model.Main.Color = Color
+     game:GetService("ReplicatedStorage").GunData.Mossberg.ViewModel.Weapon.Model.Details.Color = Color
+     game:GetService("ReplicatedStorage").GunData.Mossberg.ViewModel.Weapon.Model.Bolt.Color = Color
+     --R870
+     --UMP
+     game:GetService("ReplicatedStorage").GunData.UMP45.ViewModel.Weapon.Gun.Stock.Color = Color
+     game:GetService("ReplicatedStorage").GunData.UMP45.ViewModel.Weapon.Gun.Main.Color = Color
+     game:GetService("ReplicatedStorage").GunData.UMP45.ViewModel.Weapon.Gun.Handle.Color = Color
+     game:GetService("ReplicatedStorage").GunData.UMP45.ViewModel.Weapon.Gun.Firemode.Color = Color
+     game:GetService("ReplicatedStorage").GunData.UMP45.ViewModel.Weapon.Gun.Barrel.Color = Color
+     --MVP
+     game:GetService("ReplicatedStorage").GunData.MVP.ViewModel.Weapon.Misc.Wood.Color = Color
+     game:GetService("ReplicatedStorage").GunData.MVP.ViewModel.Weapon.Misc.Metal.Color = Color
+     game:GetService("ReplicatedStorage").GunData.MVP.ViewModel.Weapon.Misc.Trigger = Color
+     --DEAGLE
+     game:GetService("ReplicatedStorage").GunData.DesertEagle.ViewModel.Weapon.Detail["Meshes/Desert eagleExport_Cube.001"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.DesertEagle.ViewModel.Weapon.Detail["Meshes/Desert eagleExport_Cube.004"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.DesertEagle.ViewModel.Weapon.Detail["Meshes/Desert eagleExport_Cube.005"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.DesertEagle.ViewModel.Weapon.BoltVisible.Color = Color
+     --SCAR
+     game:GetService("ReplicatedStorage").GunData.SCAR.ViewModel.Weapon.Gun.Main.Color = Color
+     game:GetService("ReplicatedStorage").GunData.SCAR.ViewModel.Weapon.Gun.Rails.Color = Color
+     game:GetService("ReplicatedStorage").GunData.SCAR.ViewModel.Weapon.Gun.Stock.Color = Color
+     game:GetService("ReplicatedStorage").GunData.SCAR.ViewModel.Weapon.Gun.Trigger.Color = Color
+     --M40
+     game:GetService("ReplicatedStorage").GunData.M40A5.ViewModel.Weapon.M40A5["Meshes/M40A5Export_Cheekrest.001"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.M40A5.ViewModel.Weapon.M40A5["Meshes/M40A5Export_Circle.001"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.M40A5.ViewModel.Weapon.M40A5["Meshes/M40A5Export_Compensator.001"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.M40A5.ViewModel.Weapon.M40A5["Meshes/M40A5Export_Details.001"].Color = Color
+     game:GetService("ReplicatedStorage").GunData.M40A5.ViewModel.Weapon.M40A5["Meshes/M40A5Export_Wood.001"].Color = Color
+    end
+})
+
+local ColorPicker2 = Tab2:CreateColorPicker({
+    Name = "Color Secondary",
+    Color = Color3.fromRGB(255,255,255),
+    Flag = "ColorPicker1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Color2)
+     --PISTOLA
+     game:GetService("ReplicatedStorage").GunData.M1911.ViewModel.Weapon.Hammer.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.M1911.ViewModel.Weapon.Mag.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.M1911.ViewModel.Weapon.HandleSide.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.M1911.ViewModel.Weapon.Barrel.Color = Color2
+
+     --REVOLVER
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Loader.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Bullet6.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Bullet4.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Bullet1.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Bullet2.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Bullet3.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Bullet5.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Cylinder.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Revolver.ViewModel.Weapon.Barrel.Color = Color2
+     --GLOCK
+     game:GetService("ReplicatedStorage").GunData.Glock.ViewModel.Weapon.Mag.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Glock.ViewModel.Weapon.MagAlt.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Glock.ViewModel.Weapon.Slide.Color = Color2
+     --SKORPION
+     --MOSSBERG
+     game:GetService("ReplicatedStorage").GunData.Mossberg.ViewModel.Weapon.Model.Sight.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Mossberg.ViewModel.Weapon["Primary Frame"].Pump.Color = Color2
+     --R870
+     game:GetService("ReplicatedStorage").GunData.Shotgun.ViewModel.Weapon.Details.Part.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Shotgun.ViewModel.Weapon.Details:GetChildren()[5].Color = Color2
+     game:GetService("ReplicatedStorage").GunData.Shotgun.ViewModel.Weapon["Primary Frame"].Pump.Color = Color2
+     --UMP
+     game:GetService("ReplicatedStorage").GunData.UMP45.ViewModel.Weapon.Gun.Bulletslide.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.UMP45.ViewModel.Weapon.Gun.Handrest.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.UMP45.ViewModel.Weapon.Gun.Magrelease.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.UMP45.ViewModel.Weapon.Gun.Trigger.Color = Color2
+     --MVP
+     game:GetService("ReplicatedStorage").GunData.MVP.ViewModel.Weapon.Bolt.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.MVP.ViewModel.Weapon.Mag.Color = Color2
+     --DEAGLE
+     game:GetService("ReplicatedStorage").GunData.DesertEagle.ViewModel.Weapon.Detail["Meshes/Desert eagleExport_Circle.006"].Color = Color2
+     game:GetService("ReplicatedStorage").GunData.DesertEagle.ViewModel.Weapon.Detail["Meshes/Desert eagleExport_Cube"].Color = Color2
+     game:GetService("ReplicatedStorage").GunData.DesertEagle.ViewModel.Weapon.Detail["Meshes/Desert eagleExport_Cube.002"].Color = Color2
+     game:GetService("ReplicatedStorage").GunData.DesertEagle.ViewModel.Weapon.Detail["Meshes/Desert eagleExport_Cube.007"].Color = Color2
+     game:GetService("ReplicatedStorage").GunData.DesertEagle.ViewModel.Weapon.Detail["Meshes/Desert eagleExport_Trigger.001"].Color = Color2
+     game:GetService("ReplicatedStorage").GunData.DesertEagle.ViewModel.Weapon.MagVisible.Color = Color2
+     --SCAR
+     game:GetService("ReplicatedStorage").GunData.SCAR.ViewModel.Weapon.Bolt.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.SCAR.ViewModel.Weapon.Mag.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.SCAR.ViewModel.Weapon.Gun.AttachmentReticleNil.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.SCAR.ViewModel.Weapon.Gun:GetChildren()[6].Color = Color2
+     game:GetService("ReplicatedStorage").GunData.SCAR.ViewModel.Weapon.Gun.Firemode.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.SCAR.ViewModel.Weapon.Gun.Details.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.SCAR.ViewModel.Weapon.Gun.Barrel.Color = Color2
+     --M40
+     game:GetService("ReplicatedStorage").GunData.M40A5.ViewModel.Weapon.BoltDraw.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.M40A5.ViewModel.Weapon.MagDraw.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.M40A5.ViewModel.Weapon.AttachmentReticleNil.Color = Color2
+     game:GetService("ReplicatedStorage").GunData.M40A5.ViewModel.Weapon:GetChildren()[11].Color = Color2
+    end
+})
