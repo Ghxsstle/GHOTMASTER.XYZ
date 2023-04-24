@@ -71,7 +71,7 @@ function randomString()
 end
 
 -- FOV Changer
-local customFOV = 0
+local customFOV = 65
 
 game.Workspace.CurrentCamera.FieldOfView = customFOV
 
