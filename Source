@@ -4,7 +4,7 @@ local Window = Rayfield:CreateWindow({
     LoadingTitle = "GHOSTMASTER.XYZ LOADER",
     LoadingSubtitle = "by REMASTER & GHOSSTLE",
     ConfigurationSaving = {
-       Enabled = false,
+       Enabled = true,
        FolderName = nil, -- Create a custom folder for your hub/game
        FileName = "Big Hub"
     },
@@ -283,22 +283,10 @@ local Dropdown1 = Tab3:CreateDropdown({
                     if pchar:FindFirstChild(floatName) and getRoot(pchar) then
                         Float.CFrame = getRoot(pchar).CFrame * CFrame.new(0, FloatValue, 0)
                     else
-                        qUp:Disconnect()
-                        eUp:Disconnect()
-                        qDown:Disconnect()
-                        eDown:Disconnect()
-                        floatDied:Disconnect()
-                        Float:Destroy()
+                       
                     end
                 end
-                
                 local floatDied = pchar:FindFirstChildOfClass("Humanoid").Died:Connect(function()
-                    qUp:Disconnect()
-                    eUp:Disconnect()
-                    qDown:Disconnect()
-                    eDown:Disconnect()
-                    FloatingFunc:Disconnect()
-                    Float:Destroy()
                 end)
                 
                 local FloatingFunc = RunService.Heartbeat:Connect(floatPadLoop)
