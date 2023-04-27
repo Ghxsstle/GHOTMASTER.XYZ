@@ -295,16 +295,8 @@ local Dropdown1 = Tab3:CreateDropdown({
     
         createFloatingPart()
         elseif Floating[1] == "Float Anchored" then
-            local length = math.random(10,20)
-local array = {}
-for i = 1, length do
-    array[i] = string.char(math.random(32, 126))
-end
-local randomString = table.concat(array)
-
-local player = game.Players.LocalPlayer
+            local player = game.Players.LocalPlayer
 local isFloating = false
-local floatName = ""
 
 function float()
     if not isFloating then
@@ -329,11 +321,8 @@ local inputConnection = game:GetService("UserInputService").InputBegan:Connect(f
                 unfloat()
             else
                 float()
-end end
-        end end)
-  
-    end end 
-end
+            end end end end)
+ 
 })
 
 local Socolo = Instance.new("Sky",game:GetService("Lighting"))
